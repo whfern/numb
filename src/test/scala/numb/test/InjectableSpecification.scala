@@ -10,6 +10,6 @@ import scaldi.{Injectable, Injector}
   *
   * @author whfern
   */
-class InjectableSpecification(implicit inj: Injector) extends Specification with Injectable {
-  val injector = new TestModule :: new NumbModule
+class InjectableSpecification extends Specification with Injectable {
+  implicit val injector = new TestModule :: new NumbModule
 }

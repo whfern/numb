@@ -8,7 +8,7 @@ import scaldi.Injector
   *
   * @author whfern
   */
-class PartBasedTranslationServiceSpec(implicit inj: Injector) extends InjectableSpecification {
+class PartBasedTranslationServiceSpec extends InjectableSpecification {
 
   val partBasedTranslationService : PartBasedTranslationService = inject[PartBasedTranslationService] (by default new PartBasedTranslationService)
 
