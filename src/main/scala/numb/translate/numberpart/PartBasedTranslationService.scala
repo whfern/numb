@@ -15,6 +15,7 @@ class PartBasedTranslationService(implicit injector: Injector) extends NumberTra
   def numberPartToWordConverter: NumberPartToWordConverter = inject[NumberPartToWordConverter]
 
   override def translate(numberString: String): String = {
+    // Guard statements for invalid input
     if (null == numberString) {
       throw new IllegalArgumentException("Number supplied to part-based translate must not be null.")
     }
@@ -31,6 +32,7 @@ class PartBasedTranslationService(implicit injector: Injector) extends NumberTra
       throw new IllegalArgumentException("Number supplied to part-based translate must be between 0 and 1000001")
     }
 
+    // Clean, expand, and rejoin the string.
     def cleanedString: String = trimLeadingZeroes(trimmedString)
     def numberParts: List[NumberPart] = stringToNumberPartConverter.convertCleanStringToNumberParts(cleanedString)
     numberPartToWordConverter.translateNumberPartsToWords(numberParts)

@@ -41,6 +41,9 @@ class PartBasedTranslationServiceSpec extends InjectableSpecification {
     "translate 277444 to two hundred seventy seven thousand four hundred fourty four" >> {
       "two hundred seventy seven thousand four hundred fourty four" must_== partBasedTranslationService.translate("277444")
     }
+    "translate 1000000 to one million" >> {
+      "one million" must_== partBasedTranslationService.translate("1000000")
+    }
     "translate 1000001 to one million one" >> {
       "one million one" must_== partBasedTranslationService.translate("1000001")
     }
@@ -51,7 +54,9 @@ class PartBasedTranslationServiceSpec extends InjectableSpecification {
       "one" must_== partBasedTranslationService.translate("   1 ")
     }
     "handle unexpected input" >> {
-      failure
+      partBasedTranslationService.translate("invalid") must throwA[IllegalArgumentException]
+      partBasedTranslationService.translate("") must throwA[IllegalArgumentException]
+      partBasedTranslationService.translate("-01924") must throwA[IllegalArgumentException]
     }
   }
 
