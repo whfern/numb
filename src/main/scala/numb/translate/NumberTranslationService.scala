@@ -8,7 +8,7 @@ package numb.translate
 trait NumberTranslationService {
 
   /**
-    * Takes an integer between 0 and 1000001 and converts it into a string matching the english representation of the number.
+    * Takes an stringly typed integer between 0 and 1000001 and converts it into a string matching the english representation of the number.
     * String must have only digits within, but may contain preceding zeroes and can be untrimmed.
     * For example, "100234" -> "one hundred thousand two hundred thirty four"
     *

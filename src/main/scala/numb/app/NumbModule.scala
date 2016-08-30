@@ -3,6 +3,7 @@ package numb.app
 import numb.translate.numberpart.{DigitStringToNumberPartConverter, NumberPartToWordConverter, PartBasedTranslationService}
 import numb.translate.NumberTranslationService
 import scaldi.Module
+import scopt.OptionParser
 
 /**
   * Module that specifies the bindings for scaldi for building out the object graph.
@@ -15,3 +16,4 @@ class NumbModule extends Module {
   bind[DigitStringToNumberPartConverter] to injected[DigitStringToNumberPartConverter]
   bind[NumberPartToWordConverter] to injected[NumberPartToWordConverter]
 }
+
