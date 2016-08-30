@@ -41,10 +41,17 @@ class DigitStringToNumberPartConverter {
   }
 
   private def convertHundreds(numberString: String): Hundreds = {
-    Hundreds(
-      hundreds = Tens(numberString.substring(0, 1)),
-      tens = convertTens(numberString.substring(1))
-    )
+    if (numberString.length == 3) {
+      Hundreds(
+        hundreds = Tens(numberString.substring(0, 1)),
+        tens = convertTens(numberString.substring(1))
+      )
+    } else {
+      Hundreds(
+        hundreds = Tens("0"),
+        tens = convertTens(numberString)
+      )
+    }
   }
 
   private def convertThousands(numberString: String): List[NumberPart] = {

@@ -41,21 +41,36 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
   }
 
   private def composeHundredsString(hundreds: Tens, tens: List[Tens]): String = {
-
     /*
-    This takes the hundreds part which will be 1-9, looks it up in the dictionary and adds the configured
+    This takes the hundreds part if it is 1-9, looks it up in the dictionary and adds the configured
     hundred word (usually "hundred"), it then converts all the tens in the tens portion into strings via mapping
     their parts to the lookup method, adds them to the list, and then joins these all into one string.
      */
-    (List(lookup(hundreds.part), hundredsName) ++ tens.map(_.part).map(lookup(_))).mkString(" ")
+    (composeHundredsPrefix(hundreds) ++ tens.map(_.part).map(nonZeroLookup(_))).filter(_.nonEmpty).mkString(" ")
+  }
+
+  private def composeHundredsPrefix(hundreds: Tens): List[String] = {
+    if (hundreds.part.toInt == 0) {
+      List()
+    } else {
+      List(nonZeroLookup(hundreds.part), hundredsName)
+    }
   }
 
   private def composeThousandsString(thousands: Hundreds): String = {
-    List(composeHundredsString(thousands.hundreds, thousands.tens), thousandsName).mkString(" ")
+    List(composeHundredsString(thousands.hundreds, thousands.tens), thousandsName).filter(_.nonEmpty).mkString(" ")
   }
 
   private def composeMillionsString(millions: Hundreds): String = {
-    List(composeHundredsString(millions.hundreds, millions.tens), millionsName).mkString(" ")
+    List(composeHundredsString(millions.hundreds, millions.tens), millionsName).filter(_.nonEmpty).mkString(" ")
+  }
+
+  private def nonZeroLookup(string: String): String = {
+    if (string.toInt == 0) {
+      ""
+    } else {
+      lookup(string)
+    }
   }
 
   private def lookup(string: String): String = {
