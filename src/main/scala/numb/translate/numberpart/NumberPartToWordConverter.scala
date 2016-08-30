@@ -12,8 +12,7 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
 
   def tensDictionary: Config = inject[Config] ("translation.tens")
   def hundredsName: String = inject[String] ("translation.hundreds")
-  def thousandsName: String = inject[String] ("translation.thousands")
-  def millionsName: String = inject[String] ("translation.millions")
+  def powerDictionary: Config = inject[Config] ("translation.powers")
 
   /**
     * Converts a list of number parts to words.
@@ -23,7 +22,7 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
     */
   def translateNumberPartsToWords(numberParts: List[NumberPart]): String = {
     // Translate each part into words, get rid of empty results, and join them back together with a space between each.
-    numberParts.map(translateNumberPartToWords(_)).filter(_.nonEmpty).mkString(" and ")
+    numberParts.map(translateNumberPartToWords(_)).filter(_.nonEmpty).mkString(" ")
   }
 
   /**
@@ -36,8 +35,7 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
     numberPart match {
       case Tens(part) => tensDictionary.getString(part)
       case Hundreds(hundreds, tens) => composeHundredsString(hundreds, tens)
-      case Thousands(hundreds) => composeThousandsString(hundreds)
-      case Millions(hundreds) => composeMillionsString(hundreds)
+      case PowerThousands(hundreds, power) => composePowerThousandsString(hundreds, power)
     }
   }
 
@@ -59,19 +57,15 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
     }
   }
 
-  private def composeThousandsString(thousands: Hundreds): String = {
+  private def composePowerThousandsString(thousands: Hundreds, power: Int): String = {
     // In the case that we have 0 thousands, do not add a thousands word.
     if (thousands.hundreds.part.toInt == 0 && !thousands.tens.exists(_.part.toInt != 0)) {
       return ""
     }
     // Otherwise, compose a hundreds for the number of thousands we have, and filter empty results before joining.
-    List(composeHundredsString(thousands.hundreds, thousands.tens), thousandsName).filter(_.nonEmpty).mkString(" ")
+    List(composeHundredsString(thousands.hundreds, thousands.tens), lookupPower(power)).filter(_.nonEmpty).mkString(" ")
   }
 
-  private def composeMillionsString(millions: Hundreds): String = {
-    // Compose a hundreds word for the number of millions we have, filter empty results and join.
-    List(composeHundredsString(millions.hundreds, millions.tens), millionsName).filter(_.nonEmpty).mkString(" ")
-  }
 
   private def nonZeroLookup(string: String): String = {
     // Ensures that we do not end up with zero hundred thousand, etc.
@@ -84,6 +78,10 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
 
   private def lookup(string: String): String = {
     tensDictionary.getString(string.toInt.toString)
+  }
+
+  private def lookupPower(power: Int): String = {
+    powerDictionary.getString(power.toString)
   }
 
 }

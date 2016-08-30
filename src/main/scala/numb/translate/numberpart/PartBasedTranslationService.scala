@@ -28,21 +28,13 @@ class PartBasedTranslationService(implicit injector: Injector) extends NumberTra
     if (trimmedString.isEmpty) {
       throw new IllegalArgumentException("Number supplied to part-based translate must not be empty.")
     }
-    if (trimmedString.toInt < 0 || trimmedString.toInt > 1000001) {
-      throw new IllegalArgumentException("Number supplied to part-based translate must be between 0 and 1000001")
-    }
 
     // Clean, expand, and rejoin the string.
-    def cleanedString: String = trimLeadingZeroes(trimmedString)
-    def numberParts: List[NumberPart] = stringToNumberPartConverter.convertCleanStringToNumberParts(cleanedString)
+    def numberParts: List[NumberPart] = stringToNumberPartConverter.convertCleanStringToNumberParts(trimmedString)
     numberPartToWordConverter.translateNumberPartsToWords(numberParts)
   }
 
   private def containsNonDigits(string: String): Boolean = {
     string.matches("\\D*")
-  }
-
-  private def trimLeadingZeroes(string: String): String = {
-    string.toInt.toString
   }
 }
