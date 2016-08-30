@@ -1,4 +1,4 @@
-package numb.translate
+package numb.translate.numberpart
 
 /**
   * Expands a string into a collection of number parts.
@@ -22,7 +22,7 @@ class DigitStringToNumberPartConverter {
       case matchedString if 4 to 6 contains matchedString.length =>
         convertThousands(matchedString)
       case matchedString if 7 equals matchedString.length =>
-        convertMillions(matchedString.substring(0, 1)) ++ convertThousands(matchedString)
+        convertMillions(matchedString)
       case _ =>
         throw new RuntimeException("Unexpected string length while decomposing input string. Is the string being cleaned right?")
     }

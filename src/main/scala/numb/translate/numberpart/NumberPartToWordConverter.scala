@@ -1,4 +1,4 @@
-package numb.translate
+package numb.translate.numberpart
 
 import com.typesafe.config.Config
 import scaldi.{Injectable, Injector}
@@ -58,6 +58,9 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
   }
 
   private def composeThousandsString(thousands: Hundreds): String = {
+    if (thousands.hundreds.part.toInt == 0 && !thousands.tens.exists(_.part.toInt != 0)) {
+      return ""
+    }
     List(composeHundredsString(thousands.hundreds, thousands.tens), thousandsName).filter(_.nonEmpty).mkString(" ")
   }
 
@@ -74,7 +77,7 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
   }
 
   private def lookup(string: String): String = {
-    tensDictionary.getString(string)
+    tensDictionary.getString(string.toInt.toString)
   }
 
 }

@@ -1,6 +1,7 @@
 package numb.app
 
-import numb.translate.{DigitStringToNumberPartConverter, NumberPartToWordConverter, NumberTranslationService, PartBasedTranslationService}
+import numb.translate.numberpart.{DigitStringToNumberPartConverter, NumberPartToWordConverter, PartBasedTranslationService}
+import numb.translate.NumberTranslationService
 import scaldi.Module
 
 /**

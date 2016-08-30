@@ -1,6 +1,7 @@
 package numb.translate
 
 import numb.test.InjectableSpecification
+import numb.translate.numberpart.PartBasedTranslationService
 import scaldi.Injector
 
 /**

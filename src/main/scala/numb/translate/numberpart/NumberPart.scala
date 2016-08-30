@@ -1,4 +1,4 @@
-package numb.translate
+package numb.translate.numberpart
 
 /**
   * NumberPart is designed to provide tree-like syntax segmenting of a number

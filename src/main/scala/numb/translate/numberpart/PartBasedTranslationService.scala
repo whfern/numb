@@ -1,5 +1,6 @@
-package numb.translate
+package numb.translate.numberpart
 
+import numb.translate.NumberTranslationService
 import scaldi.{Injectable, Injector}
 
 /**
