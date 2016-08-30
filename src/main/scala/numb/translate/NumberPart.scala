@@ -5,18 +5,19 @@ package numb.translate
   */
 abstract class NumberPart
 
+
 /**
-  * Represents all numbers from 0 to 99 in a number part.
-  * @param part Int between 0-99 representing the tens.
+  * Represents all the numbers from 0 to 99 in our dictionary.
+  * @param part Number string matching a string in our dictionary
   */
-case class Tens(part: Int) extends NumberPart
+case class Tens(part: String) extends NumberPart
 
 /**
   * Represents all numbers from 0 to 999 in two number parts.
   * @param hundreds Int between 1-9 representing the hundreds place of the hundreds.
-  * @param tens Tens representing the rest of the hundreds.
+  * @param tens List of Tens representing the rest of the hundreds.
   */
-case class Hundreds(hundreds: Int, tens: Tens) extends NumberPart
+case class Hundreds(hundreds: Tens, tens: List[Tens]) extends NumberPart
 
 /**
   * Represents the thousands in a number.

@@ -1,6 +1,6 @@
 package numb.app
 
-import numb.translate.{NumberTranslationService, PartBasedTranslationService}
+import numb.translate.{DigitStringToNumberPartConverter, NumberPartToWordConverter, NumberTranslationService, PartBasedTranslationService}
 import scaldi.Module
 
 /**
@@ -9,5 +9,8 @@ import scaldi.Module
   * @author whfern
   */
 class NumbModule extends Module {
+  // Translation Service Components
   bind[NumberTranslationService] to injected[PartBasedTranslationService]
+  bind[DigitStringToNumberPartConverter] to injected[DigitStringToNumberPartConverter]
+  bind[NumberPartToWordConverter] to injected[NumberPartToWordConverter]
 }

@@ -40,17 +40,14 @@ class PartBasedTranslationServiceSpec extends InjectableSpecification {
     "translate 277444 to two hundred seventy seven thousand four hundred fourty four" >> {
       "two hundred seventy seven thousand four hundred fourty four" must_== partBasedTranslationService.translate("277444")
     }
-    "translate 1765123 to one million seven hundred sixty five one hundred twenty three" >> {
-      "one million seven hundred sixty five one hundred twenty three" must_== partBasedTranslationService.translate("1765123")
+    "translate 1000001 to one million one" >> {
+      "one million one" must_== partBasedTranslationService.translate("1000001")
     }
     "omit prefixed zeros from translation" >> {
       "one" must_== partBasedTranslationService.translate("0000001")
     }
     "trim extra space if present before translating" >> {
       "one" must_== partBasedTranslationService.translate("   1 ")
-    }
-    "handle null as a parameter" >> {
-      failure
     }
     "handle unexpected input" >> {
       failure
