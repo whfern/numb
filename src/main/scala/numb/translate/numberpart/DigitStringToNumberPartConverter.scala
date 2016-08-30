@@ -19,10 +19,8 @@ class DigitStringToNumberPartConverter {
         convertTens(matchedString)
       case matchedString if 3 equals matchedString.length =>
         List(convertHundreds(matchedString))
-      case matchedString if 4 to 6 contains matchedString.length =>
-        convertThousands(matchedString)
-      case matchedString if 7 equals matchedString.length =>
-        convertMillions(matchedString)
+      case matchedString if 3 < matchedString.length =>
+        convertPowerThousands(matchedString, (matchedString.length - 1)/ 3)
       case _ =>
         throw new RuntimeException("Unexpected string length while decomposing input string. Is the string being cleaned right?")
     }
@@ -59,22 +57,16 @@ class DigitStringToNumberPartConverter {
     }
   }
 
-  private def convertThousands(numberString: String): List[NumberPart] = {
+  private def convertPowerThousands(numberString: String, power: Int): List[NumberPart] = {
     // Segment the string based on length, and convert piecewise into a list of parts.
-    def thousandsIndex = numberString.length - 3
-    def thousandsPart = numberString.substring(0, thousandsIndex)
-    def hundredsPart = numberString.substring(thousandsIndex)
-
-    List(Thousands(convertHundreds(thousandsPart)), convertHundreds(hundredsPart))
-  }
-
-  private def convertMillions(numberString: String): List[NumberPart] = {
-    // Segment the string based on length, and convert piecewise into a list of parts.
-    def millionsIndex = numberString.length - 6
-    def millionsPart = numberString.substring(0, millionsIndex)
-    def thousandsPart = numberString.substring(millionsIndex)
-
-    List(Millions(convertHundreds(millionsPart))) ++ convertThousands(thousandsPart)
+    def thousandsIndex = numberString.length - 3 * power
+    def thousandsPart = numberString.substring(Math.max(0, numberString.length - 3 * (power + 1)), thousandsIndex)
+    if (power == 1) {
+      def hundredsPart = numberString.substring(thousandsIndex)
+      List(PowerThousands(convertHundreds(thousandsPart), power), convertHundreds(hundredsPart))
+    } else {
+      List(PowerThousands(convertHundreds(thousandsPart), power)) ++ convertPowerThousands(numberString, power - 1)
+    }
   }
 
 }

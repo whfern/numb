@@ -20,13 +20,8 @@ case class Tens(part: String) extends NumberPart
 case class Hundreds(hundreds: Tens, tens: List[Tens]) extends NumberPart
 
 /**
-  * Represents the thousands in a number.
-  * @param thousands Hundreds representing the number of thousands in a number.
+  * Represents numbers expressed as a power of one thousand.
+  * @param hundreds The number in hundreds to prefix
+  * @param power The power which this represents.
   */
-case class Thousands(thousands: Hundreds) extends NumberPart
-
-/**
-  * Represents the millions in a number.
-  * @param millions Hundreds representing the number of millions in a number.
-  */
-case class Millions(millions: Hundreds) extends NumberPart
+case class PowerThousands(hundreds: Hundreds, power: Int) extends NumberPart
