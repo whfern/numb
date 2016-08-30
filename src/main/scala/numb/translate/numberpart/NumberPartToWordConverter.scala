@@ -23,7 +23,7 @@ class NumberPartToWordConverter(implicit injector: Injector) extends Injectable 
     */
   def translateNumberPartsToWords(numberParts: List[NumberPart]): String = {
     // Translate each part into words, get rid of empty results, and join them back together with a space between each.
-    numberParts.map(translateNumberPartToWords(_)).filter(_.nonEmpty).mkString(" ")
+    numberParts.map(translateNumberPartToWords(_)).filter(_.nonEmpty).mkString(" and ")
   }
 
   /**

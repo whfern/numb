@@ -5,7 +5,6 @@ import java.lang.IllegalArgumentException
 import com.typesafe.config.{Config, ConfigFactory}
 import numb.translate.NumberTranslationService
 import scaldi.{Injectable, Injector, TypesafeConfigInjector}
-import scopt.OptionParser
 
 /**
   * Main object the holds the main function for the Numb application. It parses command line arguments and configures
